@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>zxcv.fyi - free, open-source tools for the web</title>
+  <meta name="description" content="A collection of free, open-source projects for images, PDFs, markdown, QR codes, and more. Built with care, shared with everyone.">
+  <meta name="author" content="Jeremie Bornais">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="zxcv.fyi - free, open-source tools for the web">
+  <meta property="og:description" content="A collection of free, open-source projects for images, PDFs, markdown, QR codes, and more. Built with care, shared with everyone.">
+  <meta property="og:url" content="https://zxcv.fyi">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="zxcv.fyi">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="zxcv.fyi - free, open-source tools for the web">
+  <meta name="twitter:description" content="A collection of free, open-source projects for images, PDFs, markdown, QR codes, and more. Built with care, shared with everyone.">
+
+  <link rel="canonical" href="https://zxcv.fyi">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:              #0d0d0d;
+      --bg-card:         #111111;
+      --bg-card-hover:   #161616;
+      --text:            #f0ede8;
+      --text-muted:      #666;
+      --text-dim:        #333;
+      --accent:          #b5ff4d;
+      --accent-dark:     #7ab818;
+      --border:          #222;
+      --border-hover:    #3a3a3a;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Ambient glow blob - slowly drifts */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -30%;
+      left: -20%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(181, 255, 77, 0.05) 0%, transparent 65%);
+      pointer-events: none;
+      animation: drift 18s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(15%, 10%) scale(1.1); }
+    }
+
+    /* ── Layout ─────────────────────────────── */
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Navigation ─────────────────────────── */
+
+    nav {
+      padding: 1.75rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.05s;
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: lowercase;
+      transition: color 0.2s;
+    }
+    .nav-logo strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .nav-logo:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.85rem;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-badge:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── Hero ───────────────────────────────── */
+
+    .hero {
+      padding: 5rem 0 3rem;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.15s;
+    }
+
+    .hero-eyebrow-line {
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-eyebrow-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.75rem, 11vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.25s;
+    }
+
+    .hero-title .tld {
+      color: var(--accent);
+    }
+
+    .hero-body {
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      font-size: 0.82rem;
+      line-height: 2;
+      color: var(--text-muted);
+    }
+
+
+
+    /* ── Divider ────────────────────────────── */
+
+    .divider {
+      margin: 4rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.55s;
+    }
+
+    .divider-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .divider-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .divider-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Tool cards ─────────────────────────── */
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.65s;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      padding: 2.75rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--border);
+      margin: -1px;          /* collapse borders */
+    }
+
+    /* Top-edge accent sweep */
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tool-card:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .tool-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .tool-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .tool-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.65rem;
+      line-height: 1.1;
+      color: var(--text);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .tool-card:hover .tool-name {
+      color: var(--accent);
+    }
+
+    .tool-desc {
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      flex: 1;
+      max-width: 340px;
+      position: relative;
+    }
+
+    .tool-footer {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 0.4rem;
+      position: relative;
+      flex-wrap: nowrap;
+    }
+
+    .tool-link {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tool-link:hover {
+      color: var(--text);
+    }
+
+    .tool-link-primary {
+      color: var(--accent);
+    }
+
+    .tool-link-primary:hover {
+      color: var(--text);
+    }
+
+    /* ── Footer ─────────────────────────────── */
+
+    footer {
+      margin-top: 4rem;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.85s;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .footer-copy {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .footer-copy a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-copy a:hover { color: var(--accent); }
+
+
+
+    /* Keyboard keys */
+    .footer-keys {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #2a2a2a;
+      border-bottom-width: 3px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: #444;
+      border-radius: 4px;
+      background: #111;
+      user-select: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .key:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── Animations ─────────────────────────── */
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ─────────────────────────── */
+
+    @media (max-width: 760px) {
+      .tools {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 3rem 0 2rem;
+      }
+
+      .tool-card {
+        padding: 2rem 1.5rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Navigation -->
+    <nav>
+      <a href="/" class="nav-logo">
+        <strong>zxcv</strong>.fyi
+      </a>
+      <div class="nav-right">
+        <a href="https://github.com/jere-mie/zxcv.fyi" class="nav-badge" target="_blank" rel="noopener noreferrer">
+          GitHub ↗
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-line"></span>
+        <span class="hero-eyebrow-text">free · open source · always improving</span>
+      </div>
+      <h1 class="hero-title">
+        zxcv<span class="tld">.fyi</span>
+      </h1>
+      <div class="hero-body">
+        <p class="hero-desc">
+          A growing collection of free, open-source projects - tools for images, PDFs,
+          markdown, QR codes, and more. Built with care, shared with everyone.
+        </p>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider">
+      <div class="divider-dot"></div>
+      <span class="divider-label">projects</span>
+      <div class="divider-rule"></div>
+    </div>
+
+    <!-- Tools grid -->
+    <div class="tools">
+
+      <div class="tool-card" data-href="https://imgtools.zxcv.fyi">
+        <span class="tool-tag">Image Toolkit</span>
+        <h2 class="tool-name">imgtools.zxcv.fyi</h2>
+        <p class="tool-desc">
+          Convert, compress, resize, crop, rotate, and batch-process images instantly.
+          Everything happens locally - your files never leave your device.
+        </p>
+        <div class="tool-footer">
+          <a class="tool-link tool-link-primary" href="https://imgtools.zxcv.fyi" target="_blank" rel="noopener noreferrer">Open tool ↗</a>
+          <a class="tool-link" href="https://github.com/jere-mie/imgtools" target="_blank" rel="noopener noreferrer">Source ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card" data-href="https://pdftools.zxcv.fyi">
+        <span class="tool-tag">PDF Toolkit</span>
+        <h2 class="tool-name">pdftools.zxcv.fyi</h2>
+        <p class="tool-desc">
+          Merge, split, rotate, resize, reorder, compress, and delete PDF pages.
+          All processing happens client-side. Zero data leaves your browser.
+        </p>
+        <div class="tool-footer">
+          <a class="tool-link tool-link-primary" href="https://pdftools.zxcv.fyi" target="_blank" rel="noopener noreferrer">Open tool ↗</a>
+          <a class="tool-link" href="https://github.com/jere-mie/pdftools" target="_blank" rel="noopener noreferrer">Source ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card" data-href="https://mdbin.zxcv.fyi">
+        <span class="tool-tag">Paste and Share Markdown</span>
+        <h2 class="tool-name">mdbin.zxcv.fyi</h2>
+        <p class="tool-desc">
+          A minimal, beautiful pastebin for Markdown. Paste or write content
+          and share it with others via a unique, readable URL.
+        </p>
+        <div class="tool-footer">
+          <a class="tool-link tool-link-primary" href="https://mdbin.zxcv.fyi" target="_blank" rel="noopener noreferrer">Open tool ↗</a>
+          <a class="tool-link" href="https://github.com/jere-mie/mdbin" target="_blank" rel="noopener noreferrer">Source ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card" data-href="https://qr.zxcv.fyi">
+        <span class="tool-tag">QR Generator</span>
+        <h2 class="tool-name">qr.zxcv.fyi</h2>
+        <p class="tool-desc">
+          Create, style, and export custom QR codes directly in your browser.
+          Adjust colors, size and error correction. No backend, no data leaves your device.
+        </p>
+        <div class="tool-footer">
+          <a class="tool-link tool-link-primary" href="https://qr.zxcv.fyi" target="_blank" rel="noopener noreferrer">Open tool ↗</a>
+          <a class="tool-link" href="https://github.com/jere-mie/qr-generator" target="_blank" rel="noopener noreferrer">Source ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-left">
+        <p class="footer-copy">
+          © 2026 <a href="https://github.com/jere-mie" target="_blank" rel="noopener noreferrer">jere-mie</a>
+          &nbsp;·&nbsp; open source, always free
+        </p>
+      </div>
+      <div class="footer-keys" aria-hidden="true">
+        <span class="key">z</span>
+        <span class="key">x</span>
+        <span class="key">c</span>
+        <span class="key">v</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Make entire card clickable without nesting <a> tags inside <a>
+    document.querySelectorAll('.tool-card[data-href]').forEach(card => {
+      card.addEventListener('click', e => {
+        // Don't re-navigate if they clicked an actual link inside
+        if (e.target.closest('a')) return;
+        window.open(card.dataset.href, '_blank', 'noopener,noreferrer');
+      });
+    });
+  </script>
+
+</body>
+</html>
