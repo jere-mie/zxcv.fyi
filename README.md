@@ -9,6 +9,9 @@ The hub site for the zxcv.fyi collection of free, open-source projects.
 | Project | URL | Description |
 |---------|-----|-------------|
 | zxcv.fyi | https://zxcv.fyi | This site - the hub linking to all projects |
+| fileconverter | https://fileconverter.zxcv.fyi | Browser-based file converter for video, audio, image, and document formats |
+| seo | https://seo.zxcv.fyi | Privacy-first SEO toolkit with client-side utilities like favicon/icon generation |
+| unslop | https://unslop.zxcv.fyi | Text cleanup tool and CLI for stripping curly quotes, dashes, ellipses, and more |
 | imgtools | https://imgtools.zxcv.fyi | Browser-based image toolkit (convert, compress, resize, crop, rotate, batch-process) |
 | pdftools | https://pdftools.zxcv.fyi | Browser-based PDF toolkit (merge, split, rotate, resize, reorder, compress, delete pages) |
 | mdbin | https://mdbin.zxcv.fyi | Minimal markdown pastebin - paste content and share via unique URL |
