@@ -12,6 +12,7 @@ The hub site for the zxcv.fyi collection of free, open-source projects.
 | fileconverter | https://fileconverter.zxcv.fyi | Browser-based file converter for video, audio, image, and document formats |
 | seo | https://seo.zxcv.fyi | Privacy-first SEO toolkit with client-side utilities like favicon/icon generation |
 | latex | https://latex.zxcv.fyi | Privacy-first, Wasm-powered LaTeX editor that runs entirely in the browser |
+| certificates | https://certificates.zxcv.fyi | Browser-based certificate generator for beautiful vectorized PDF certificates |
 | unslop | https://unslop.zxcv.fyi | Text cleanup tool and CLI for stripping curly quotes, dashes, ellipses, and more |
 | imgtools | https://imgtools.zxcv.fyi | Browser-based image toolkit (convert, compress, resize, crop, rotate, batch-process) |
 | pdftools | https://pdftools.zxcv.fyi | Browser-based PDF toolkit (merge, split, rotate, resize, reorder, compress, delete pages) |
