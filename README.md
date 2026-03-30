@@ -18,6 +18,7 @@ The hub site for the zxcv.fyi collection of free, open-source projects.
 | pdftools | https://pdftools.zxcv.fyi | Browser-based PDF toolkit (merge, split, rotate, resize, reorder, compress, delete pages) |
 | mdbin | https://mdbin.zxcv.fyi | Minimal markdown pastebin - paste content and share via unique URL |
 | qr | https://qr.zxcv.fyi | Custom QR code generator (style, export, no backend) |
+| gifviewer | https://gifviewer.zxcv.fyi | Browser GIF viewer: frame-by-frame playback, scrubbing, and frame export to WebP, PNG, or JPEG. |
 
 ## Tech
 
