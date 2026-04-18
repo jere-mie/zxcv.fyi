@@ -19,6 +19,7 @@ The hub site for the zxcv.fyi collection of free, open-source projects.
 | mdbin | https://mdbin.zxcv.fyi | Minimal markdown pastebin - paste content and share via unique URL |
 | qr | https://qr.zxcv.fyi | Custom QR code generator (style, export, no backend) |
 | gifviewer | https://gifviewer.zxcv.fyi | Browser GIF viewer: frame-by-frame playback, scrubbing, and frame export to WebP, PNG, or JPEG. |
+| JSX Playground | https://jsx.zxcv.fyi | Paste or upload a JSX file and preview your React component instantly in the browser |
 
 ## Tech
 
