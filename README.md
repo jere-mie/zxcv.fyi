@@ -8,8 +8,6 @@ The hub site for the zxcv.fyi collection of free, open-source projects.
 
 | Project | URL | Description |
 |---------|-----|-------------|
-| Project | URL | Description |
-|---------|-----|-------------|
 | [zxcv.fyi](https://github.com/jere-mie/zxcv.fyi) | https://zxcv.fyi | This site - the hub linking to all projects |
 | [fileconverter](https://github.com/jere-mie/fileconverter) | https://fileconverter.zxcv.fyi | Browser-based file converter for video, audio, image, and document formats |
 | [seo](https://github.com/jere-mie/seotools) | https://seo.zxcv.fyi | Privacy-first SEO toolkit with client-side utilities like favicon/icon generation |
