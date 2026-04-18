@@ -19,6 +19,9 @@ The hub site for the zxcv.fyi collection of free, open-source projects.
 | mdbin | https://mdbin.zxcv.fyi | Minimal markdown pastebin - paste content and share via unique URL |
 | qr | https://qr.zxcv.fyi | Custom QR code generator (style, export, no backend) |
 | gifviewer | https://gifviewer.zxcv.fyi | Browser GIF viewer: frame-by-frame playback, scrubbing, and frame export to WebP, PNG, or JPEG. |
+| notebook | https://notebook.zxcv.fyi | A beautiful, minimal notes app with code highlighting |
+| calculator | https://calculator.zxcv.fyi | Real-time expression evaluator with variables, functions, and a clean modern interface |
+| vidmaker | http://vidmaker.zxcv.fyi/ | Create a compact MP4 from an image and an audio file entirely in the browser using WebCodecs |
 | JSX Playground | https://jsx.zxcv.fyi | Paste or upload a JSX file and preview your React component instantly in the browser |
 
 ## Tech
